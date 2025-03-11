@@ -7,36 +7,29 @@ const UserSchema = new mongoose.Schema({
     password: {type: String, required: true}
 })
 
-// Password hash middleware.
-
-UserSchema.pre("save", function save(next) {
-    const user = this;
-    if (!user.isModified("password")) {
-      return next();
+// Hash password before saving a new user
+UserSchema.pre('save', async function (next) {
+  if (this.isModified('password')) { // Check if password is modified
+    try {
+      const salt = await bcrypt.genSalt(10); // Generate a salt
+      this.password = await bcrypt.hash(this.password, salt); // Hash the password
+      next(); // Proceed with saving the user after hashing the password
+    } catch (err) {
+      next(err); // Pass any error to the next middleware
     }
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) {
-        return next(err);
-      }
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) {
-          return next(err);
-        }
-        user.password = hash;
-        next();
-      });
-    });
-  });
-  
-  // Helper method for validating user's password.
-  
-  UserSchema.methods.comparePassword = function comparePassword(
-    candidatePassword,
-    cb
-  ) {
-    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-      cb(err, isMatch);
-    });
-  };
+  } else {
+    next(); // If password wasn't modified, proceed to save user
+  }
+});
+
+// Password hash middleware.
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch; // Return the result of comparison (true or false)
+  } catch (err) {
+    throw new Error('Password comparison failed');
+  }
+};
 
 module.exports = mongoose.model("User", UserSchema);

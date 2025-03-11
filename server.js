@@ -11,6 +11,8 @@ const connectDB = require('./config/database.js')
 const Test = require('./models/Test.js')
 const mainRoutes = require('./routes/main.js')
 const authRoutes = require('./routes/auth.js')
+const postRoutes = require('./routes/post.js')
+const commentRoutes = require('./routes/comment.js')
 
 // Load environment variables
 require("dotenv").config({ path: "./config/.env" })
@@ -62,6 +64,8 @@ app.use(flash()); // Ensure it's setup after express-session since flash relies 
 
 app.use('/', mainRoutes)
 app.use('/auth', authRoutes)
+app.use('/post', postRoutes)
+app.use('/comment', commentRoutes)
 
 // test
 app.post('/test', async (req, res) => {
