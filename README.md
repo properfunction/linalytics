@@ -5,6 +5,7 @@ TFT app that connects players of all skill levels and allows for insights from t
 
 **Tech used:** JavaScript, Node, Express, MongoDB, Tailwind, EJS, Passport, Cloudinary, Bcrypt
 
+Following an MVC model.
 Using Node and Express to create a server that connects to MongoDB database via Mongoose. 
 Adding authorisation using strategies from Passport, with enhanced security via password hashing from bcrypt. 
 Opting for cloudinary middleware to provide an easy and optimised storage solution for media.
@@ -12,7 +13,12 @@ Rendering will be handled by EJS templating engine, which easily handles HTML an
 
 ## Optimizations
 
-Following an MVC model using JavaScript, there is an option to further optimise with React
+Passing existing Mongoose client instead of MongoDB connection string directly:
+We avoid making a separate connection for session storage by passing the existing Mongoose client to the session store (client: mongoose.connection.client).
+This helps reduce the overhead of managing multiple database connections and ensures more consistent and faster operations.
+
+Future Features: 
+Use iframes to handle youtube video 
 
 ## Lessons Learned:
 
