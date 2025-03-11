@@ -1,18 +1,28 @@
-// Core modules
 const express = require('express');
 const session = require('express-session')
 const app = express(); // Initialize express app
-
-// Third-party modules
-require("dotenv").config({ path: "./config/.env" }) // Load environment variables
 const mongoose = require('mongoose')
 const MongoStore = require('connect-mongo')
-
-// Local modules
+const methodOverride = require('method-override')
+const flash = require('express-flash')
+const logger = require('morgan')
+const passport = require('passport')
 const connectDB = require('./config/database.js')
+const User = require('./models/User.js')
+const Test = require('./models/Test.js')
+const mainRoutes = require('./routes/main.js')
+
+// Load environment variables
+require("dotenv").config({ path: "./config/.env" })
+
+// Passport config
+require("./config/passport")(passport)
 
 // Connect to Database 
 connectDB()
+
+// Use EJS for views
+app.set("view engine", "ejs")
 
 // Static folder
 app.use(express.static("public"))
@@ -20,6 +30,12 @@ app.use(express.static("public"))
 // Body Parsing
 app.use(express.json()) // Parses JSON bodies
 app.use(express.urlencoded({ extended: true })) // Parses url-encoded bodies from forms
+
+// Logging
+app.use(logger("dev"));
+
+// Method override for forms
+app.use(methodOverride("_method"));
 
 // Setup Sessions - stored in MongoDB
 app.use(
@@ -35,8 +51,36 @@ app.use(
     })
   );
   
+// Passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Setup Routes that server is listening for
+
+app.use('/', mainRoutes)
+
+// test
+app.post('/test', async (req, res) => {
+  try {
+    console.log('Request Body:', req.body);  // Log the incoming data
+
+    const { caption } = req.body; // Grab content from the request body and stor it in caption
+    if (!caption) {
+      return res.status(400).send('Caption is required');
+    }
+
+    const newTest = new Test({ caption }); // Pass caption into the Test model and store it in db
+
+    const savedTest = await newTest.save(); // Use await instead of callback
+    console.log('Saved Test:', savedTest);
+
+    res.status(201).json(savedTest);
+  } catch (err) {
+    console.error('Error saving:', err);
+    res.status(500).send(err);
+  }
+});
+
 app.get('/', (req, res) => {
     res.send('Hello wd')
 })
