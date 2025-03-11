@@ -31,11 +31,29 @@ module.exports = function (passport) {
       })
     );
   
+    // passport.serializeUser((user, done) => {
+    //   done(null, user.id); // Store the user's ID in the session
+    // });
+  
+    // passport.deserializeUser((id, done) => {
+    //   User.findById(id, (err, user) => done(err, user)); // Retrieve the user from the database based on the session ID
+    // });
+    
     passport.serializeUser((user, done) => {
       done(null, user.id); // Store the user's ID in the session
     });
-  
-    passport.deserializeUser((id, done) => {
-      User.findById(id, (err, user) => done(err, user)); // Retrive the user from the database based on the session ID
+    
+    passport.deserializeUser(async (id, done) => {
+      try {
+        const user = await User.findById(id); // Retrieve the user from the database asynchronously
+    
+        if (!user) {
+          return done(new Error("User not found"));
+        }
+    
+        done(null, user); // Pass the user object to the done callback
+      } catch (err) {
+        done(err); // Handle any errors during the database query
+      }
     });
   };

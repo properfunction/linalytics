@@ -4,13 +4,13 @@ const app = express(); // Initialize express app
 const mongoose = require('mongoose')
 const MongoStore = require('connect-mongo')
 const methodOverride = require('method-override')
-const flash = require('express-flash')
+const flash = require('express-flash') 
 const logger = require('morgan')
 const passport = require('passport')
 const connectDB = require('./config/database.js')
-const User = require('./models/User.js')
 const Test = require('./models/Test.js')
 const mainRoutes = require('./routes/main.js')
+const authRoutes = require('./routes/auth.js')
 
 // Load environment variables
 require("dotenv").config({ path: "./config/.env" })
@@ -55,9 +55,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Flash messages for errors, etc
+app.use(flash()); // Ensure it's setup after express-session since flash relies on session storage
+
 // Setup Routes that server is listening for
 
 app.use('/', mainRoutes)
+app.use('/auth', authRoutes)
 
 // test
 app.post('/test', async (req, res) => {
@@ -81,9 +85,6 @@ app.post('/test', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello wd')
-})
 
 // Server running
 app.listen(process.env.PORT, () => { // Use PORT from process.env
