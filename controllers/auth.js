@@ -13,7 +13,7 @@ module.exports ={
     },
     getSignup: (req, res) => {
         if(req.user) {
-            return res.redirect("/profile")
+            return res.redirect("/profile") // If user is logged in take them to the profile page
         }
         res.render("signup", {
             title: "Creat Account",
@@ -69,7 +69,7 @@ module.exports ={
       
         if (validationErrors.length) {
           req.flash("errors", validationErrors);
-          return res.redirect("../signup");
+          return res.redirect("../auth/signup"); // Make sure to specify auth in the route
         }
         req.body.email = validator.normalizeEmail(req.body.email, {
           gmail_remove_dots: false,
