@@ -29,5 +29,21 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
-    }, 
+    },
+    getFeed: async (req, res) => {
+        try {
+            const posts = await Post.find().sort({ createdAt: "desc" }).lean() // The sort method takes an object as an argument and lean makes queries faster by returning JS objects instead of Mongoose documents
+            res.render("feed.ejs", { posts: posts })
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    getPost: async (req, res) => {
+        try {
+            const post = await Post.findById(req.params.id)
+            res.render("post.ejs", { post: post, user: req.user })
+        } catch (err) {
+            console.log(err)
+        }
+    },
 }
