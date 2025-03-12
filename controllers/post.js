@@ -1,6 +1,6 @@
 const Post = require('../models/Post')
 const cloudinary = require('../middleware/cloudinary')
-
+const Comment = require('../models/Comment')
 
 module.exports = {
     getProfile: async (req, res) => {
@@ -41,7 +41,8 @@ module.exports = {
     getPost: async (req, res) => {
         try {
             const post = await Post.findById(req.params.id)
-            res.render("post.ejs", { post: post, user: req.user })
+            const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).populate('user') // The populate allows us to get user details instrad of just user ID
+            res.render("post.ejs", { post: post, user: req.user, comments: comments })
         } catch (err) {
             console.log(err)
         }
