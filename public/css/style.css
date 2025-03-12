@@ -1,0 +1,6 @@
+body {
+    background-image: url('/imgs/tft-bg.jpg'); /* Point to the image inside the css folder */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
