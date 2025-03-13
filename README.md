@@ -1,6 +1,9 @@
 # linalytics
 
-**Link to project:** https://linalytics.onrender.com/
+**Link to project:**
+<a href="https://github.com/yourusername/yourproject" target="_blank" rel="noopener noreferrer">
+    View on GitHub
+</a>
 
 TFT app that connects players of all skill levels and allows for insights from the community aimed at improving gameplay fundamentals.
 
