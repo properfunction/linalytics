@@ -4,6 +4,7 @@
       <ul class="row list-unstyled">
         <% for(var i=0; i<posts.length; i++) {%>
           <li class="col-6 justify-content-between mt-5">
+            <h3 class="post-title mt-2"><%= posts[i].title %></h3>
             <a href="/post/<%= posts[i]._id%>">
               <img class="img-fluid feed-image" src="<%= posts[i].image%>">
             </a>
