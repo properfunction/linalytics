@@ -1,4 +1,7 @@
-# tft-coaching
+# linalytics
+
+**Link to project:** https://linalytics.onrender.com/
+
 TFT app that connects players of all skill levels and allows for insights from the community aimed at improving gameplay fundamentals.
 
 ## How It's Made:
