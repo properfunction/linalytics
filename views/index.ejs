@@ -4,6 +4,12 @@
     <div class="row justify-content-around mt-5">
         <a href="/auth/login" class="col-3 btn btn-primary"> Login</a>
         <a href="/auth/signup" class="col-3 btn btn-primary"> Signup</a>
+
+        <form id="guest-login-form" action="/auth/login-guest" method="POST" style="display: none;">
+            <input type="hidden" name="username" value="guest">
+            <input type="hidden" name="password" value="guestpassword">
+        </form>
+        <button onclick="document.getElementById('guest-login-form').submit();" class="col-3 btn btn-secondary">Login as Guest</button>
     </div>
 </main>
     

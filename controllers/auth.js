@@ -2,6 +2,8 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require("../models/User")
 
+
+
 module.exports ={
     getLogin: (req, res) => {
         if(req.user) {
@@ -64,6 +66,31 @@ module.exports ={
          });
       })(req, res, next); // Pass `req`, `res`, and `next` to the authenticate method
    },
+   postLoginGuest: async (req, res, next) => {
+    try {
+      // Hardcode the guest user's ID
+      const guestUserId = '67d2ad08463d401aff35c476'; // The guest user ID from the database
+
+      // Find the guest user by ID
+      const guestUser = await User.findById(guestUserId);
+
+      if (!guestUser) {
+        req.flash('errors', { msg: 'Guest account not found.' });
+        return res.redirect('/auth/login');
+      }
+
+      // Log the user in without checking the password
+      req.logIn(guestUser, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/profile'); // Redirect to profile upon successful login
+      });
+
+      } catch (err) {
+        return next(err); // Pass any errors to the next middleware
+      }
+    },
     postSignup: async (req, res, next) => {
         const validationErrors = [];
         if (!validator.isEmail(req.body.email))

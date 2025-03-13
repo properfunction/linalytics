@@ -8,5 +8,6 @@ router.get('/login', authController.getLogin)
 router.post('/signup', authController.postSignup)
 router.post('/login', authController.postLogin)
 router.get('/logout', authController.logout)
+router.post('/login-guest', authController.postLoginGuest)
 
 module.exports = router;
