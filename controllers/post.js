@@ -56,7 +56,7 @@ module.exports = {
     
             // Get the comments related to the post
             const comments = await Comment.find({ post: req.params.id })
-                .sort({ createdAt: "desc" })
+                .sort({ createdAt: "asc" })
                 .populate('user');  // Populate user details instead of just user ID
     
             // Render the post view with the post, user, and comments
