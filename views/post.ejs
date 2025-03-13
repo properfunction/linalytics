@@ -3,7 +3,23 @@
   <div class="row justify-content-center mt-5">
     <div class="col-6">
       <h2><%= post.title %></h2>
-      <img class="img-fluid" src="<%= post.image%>" />
+      
+
+      <% if (post.youtubeId) { %>
+        <div class="mt-3">
+          <iframe class="post-image"
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/<%= post.youtubeId %>" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      <% } else { %>
+        <img class="img-fluid post-image" src="<%= post.image%>" />
+      <% } %> 
+
       <div class="row justify-content-between">
         <form
           class="col-1"
@@ -42,7 +58,6 @@
     <%= comments[i].comment %>
   </li>
 <% } %>
-
     </ul>
 
     <div class="mt-5">
@@ -55,8 +70,6 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
     </div>
-    
-
 
     <div class="col-6 mt-5">
       <a class="btn btn-primary" href="/profile">Return to Profile</a>

@@ -4,3 +4,27 @@ body {
     background-position: center;
     background-attachment: fixed;
   }
+
+  .profile-image {
+    width: 100%;        /* Ensures image takes up full width of container */
+    height: 250px;      /* Fixed height for all images */
+    object-fit: cover;  /* Ensures aspect ratio is maintained */
+    border-radius: 8px; /* Optional: adds rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+  }
+
+  /* Feed page image style (larger images) */
+.feed-image {
+  width: 100%;
+  height: 300px; /* Adjust the size as needed */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Individual post page image style (larger still) */
+.post-image {
+  width: 100%;
+  height: 500px; /* Adjust the size for individual posts */
+  object-fit: cover;
+  border-radius: 8px;
+}

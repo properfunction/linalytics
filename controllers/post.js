@@ -23,6 +23,7 @@ module.exports = {
                 caption: req.body.caption,
                 likes: 0,
                 user: req.user.id,
+                youtubeId: req.body.youtubeId ? req.body.youtubeId.split('v=')[1] : null, // Extract video ID from YouTube URL if provided by splitting the url into an array an takeing the second elemnt at index [1]
               });
               console.log("Post has been added!");
               res.redirect("/profile");

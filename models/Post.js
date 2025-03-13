@@ -25,6 +25,11 @@ const PostSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
+    youtubeId: {
+        type: String,
+        required: false,
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now
