@@ -48,4 +48,39 @@ module.exports = {
             console.log(err)
         }
     },
+    deletePost: async (req, res) => {
+        try {
+            // Find post by id
+            const post = await Post.findById({ _id: req.params.id });
+
+            // Check if post exists
+            if (!post) {
+                return res.status(404).send("Post not found");
+            }
+
+            // Log the Cloudinary ID to confirm it's correct
+            console.log('Cloudinary ID to delete:', post.cloudinaryId);
+
+            // Delete the image from Cloudinary
+            cloudinary.uploader.destroy(post.cloudinaryId, async (error, result) => {
+                if (error) {
+                    console.log('Error deleting from Cloudinary:', error);
+                    return res.status(500).send('Failed to delete media from Cloudinary');
+                }
+
+                // Log the result from Cloudinary
+                console.log('Cloudinary deletion result:', result);
+
+                // Delete the post from the database
+                await Post.deleteOne({ _id: req.params.id });
+                console.log('Post deleted from database');
+
+                // Redirect to the profile page after deletion
+                res.redirect('/profile');
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Failed to delete post');
+        }
+    },
 }

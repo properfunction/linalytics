@@ -3,6 +3,8 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    color: #F8F8FF; /* Ivory or off-white text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Dark shadow behind text */
   }
 
   .profile-image {
@@ -27,4 +29,24 @@ body {
   height: 500px; /* Adjust the size for individual posts */
   object-fit: cover;
   border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: darkorange;
+  border-color: darkorange;
+}
+
+.btn-primary:hover {
+  background-color: orange;
+  border-color: orange;
+}
+
+.fa-heart {
+  background-color: green;
+  border-color: green;
+}
+
+.fa-trash {
+  background-color:red;
+  border-color: red;
 }
