@@ -14,6 +14,9 @@ const authRoutes = require('./routes/auth.js')
 const postRoutes = require('./routes/post.js')
 const commentRoutes = require('./routes/comment.js')
 
+const port = process.env.PORT || 3000; // Use the Render-provided port, default to 3000 locally
+
+
 // Load environment variables
 require("dotenv").config({ path: "./config/.env" })
 
@@ -91,6 +94,6 @@ app.post('/test', async (req, res) => {
 
 
 // Server running
-app.listen(process.env.PORT, () => { // Use PORT from process.env
+app.listen(port, () => { // Use PORT from process.env
     console.log('Server is running, you better go catch it!')
 })
