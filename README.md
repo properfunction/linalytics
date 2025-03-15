@@ -6,7 +6,7 @@ TFT app that connects players of all skill levels and allows for insights from t
 
 ## How It's Made:
 
-**Tech used:** JavaScript, Node, Express, MongoDB, Tailwind, EJS, Passport, Cloudinary, Bcrypt
+**Tech used:** JavaScript, Node, Express, MongoDB, Bootstrap, EJS, Passport, Cloudinary, Bcrypt
 
 Following an MVC model.
 Using Node and Express to create a server that connects to MongoDB database via Mongoose. 
